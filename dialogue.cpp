@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-
+// Class Personnages
 class Characters {
     public:
         std::string name;
