@@ -11,16 +11,19 @@ class Characters
 {
 public:
     std::string name;
+    // Introduction de la variable relation
+    int pointsRelationship;
+
     // Constructeur pour intitialiser le nom du personnage
-    Characters(std::string name) : name(name)
-    {
-    }
+    Characters(std::string name) : name(name), pointsRelationship(0) {}
+
     // Methode pour faire parler le personnage
     void talk(std::string dialogue)
     {
         std::cout << name << ": " << dialogue << std::endl;
     }
-    // Fonction Pour obtenir la réponse du personnage
+
+    // Fonction pour choisir la réponse parmi les options
     std::string getAnswer(std::vector<std::string> options)
     {
         std::cout << name << ", que reponds tu ?" << std::endl;
@@ -32,6 +35,20 @@ public:
         std::string answer;
         std::getline(std::cin, answer);
         return answer;
+    }
+
+    // Fonction pour ajuster les points en fonction de la 2éme question
+    void adjustPointsRelationship(int points)
+    {
+        pointsRelationship += points;
+        if (pointsRelationship > 10)
+        {
+            pointsRelationship = 10;
+        }
+        else if (pointsRelationship < -10)
+        {
+            pointsRelationship = -10;
+        }
     }
 };
 
@@ -69,7 +86,39 @@ int main()
         }
     }
 
-// Je met ca pour tester le programme.exe sinon disparait hors de while
+    // 2ème question
+    while (true)
+    {
+        hiloul.talk("Est-ce que tu me trouves jolie aujourd'hui ?");
+
+        // Choisir sa réponse
+        std::vector<std::string> options2 = {"Oui youhou !", "Non beurk !", "autre"};
+        std::string answerAdel2 = adel.getAnswer(options2);
+        if (answerAdel2 == "1")
+        {
+            adel.talk("Oui tu est très belle !");
+            hiloul.talk("Merci beaucoup ca me fait plaisir !");
+            adel.adjustPointsRelationship(1);
+            // break;
+        }
+        else if (answerAdel2 == "2")
+        {
+            adel.talk("Non beurk !");
+            hiloul.talk("Oh ok tant pis...");
+            adel.adjustPointsRelationship(-1);
+            // break;
+        }
+        else
+        {
+            hiloul.talk("Pas compris ta réponse tu me trouvais jolie ? ?");
+        }
+        // Correction ici : ajout de la virgule
+        hiloul.talk("Points de relation avec Adel: " +
+                    std::to_string(adel.pointsRelationship));
+        break;
+    }
+
+    // Je met ca pour tester le programme.exe sinon disparait hors de while
 #ifdef _WIN32
     Sleep(5000); // Délai en millisecondes sur Windows
 #endif
