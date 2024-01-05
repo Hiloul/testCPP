@@ -1,6 +1,6 @@
 #include <iostream>
 #include <chrono>
-#inc lude <thread>
+#include <thread>
 
 #ifdef _WIN32
 #include <windows.h> // Pour Sleep sur Windows
