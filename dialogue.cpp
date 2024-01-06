@@ -98,6 +98,9 @@ void playRockPaperScissors(Characters &player1, Characters &player2)
     }
 
     // Afficher le gagnant de la partie
+    std::cout << std::endl
+              << std::endl;
+
     if (player1Score > player2Score)
     {
         std::cout << player1.name << " remporte la partie avec un score de " << player1Score << " à " << player2Score << " !" << std::endl;
@@ -110,6 +113,9 @@ void playRockPaperScissors(Characters &player1, Characters &player2)
     {
         std::cout << "La partie se termine par une égalité avec un score de " << player1Score << " à " << player2Score << " !" << std::endl;
     }
+    
+    std::cout << std::endl
+              << std::endl;
 }
 
 // Fonction principale
@@ -225,5 +231,3 @@ int main()
 #endif
     return 0;
 }
-
-// La question est reposée à chaque fois que le jeu se termine
