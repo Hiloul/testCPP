@@ -56,39 +56,59 @@ public:
 // Fonction pour jouer à Pierre-Papier-Ciseaux
 void playRockPaperScissors(Characters &player1, Characters &player2)
 {
-    std::vector<std::string> rpsOptions = {"Pierre", "Feuille", "Ciseaux"};
-    std::cout << "Choisissez une option :\n";
-    for (int i = 0; i < rpsOptions.size(); ++i)
+    int player1Score = 0;
+    int player2Score = 0;
+
+    while (player1Score < 3 && player2Score < 3)
     {
-        std::cout << i + 1 << ". " << rpsOptions[i] << std::endl;
+        std::vector<std::string> rpsOptions = {"Pierre", "Feuille", "Ciseaux"};
+        std::cout << "Choisissez une option :\n";
+        for (int i = 0; i < rpsOptions.size(); ++i)
+        {
+            std::cout << i + 1 << ". " << rpsOptions[i] << std::endl;
+        }
+
+        int choice;
+        std::cout << "Votre choix : ";
+        std::cin >> choice;
+
+        // Génération aléatoire du choix de l'ordinateur (Adel)
+        int computerChoice = rand() % rpsOptions.size() + 1;
+
+        std::cout << player1.name << " a choisi " << rpsOptions[choice - 1] << std::endl;
+        std::cout << player2.name << " a choisi " << rpsOptions[computerChoice - 1] << std::endl;
+
+        // Logique du jeu
+        if (choice == computerChoice)
+        {
+            std::cout << "Égalité !" << std::endl;
+        }
+        else if ((choice == 1 && computerChoice == 3) ||
+                 (choice == 2 && computerChoice == 1) ||
+                 (choice == 3 && computerChoice == 2))
+        {
+            std::cout << player1.name << " remporte la partie !" << std::endl;
+            player1Score++;
+        }
+        else
+        {
+            std::cout << player2.name << " remporte la partie !" << std::endl;
+            player2Score++;
+        }
     }
 
-    int choice;
-    std::cout << "Votre choix : ";
-    std::cin >> choice;
-
-    // Génération aléatoire du choix de l'ordinateur (Carlos)
-    int computerChoice = rand() % rpsOptions.size() + 1;
-
-    std::cout << player1.name << " a choisi " << rpsOptions[choice - 1] << std::endl;
-    std::cout << player2.name << " a choisi " << rpsOptions[computerChoice - 1] << std::endl;
-
-    // Logique du jeu
-    if (choice == computerChoice)
+    // Afficher le gagnant de la partie
+    if (player1Score > player2Score)
     {
-        std::cout << "Égalité !" << std::endl;
+        std::cout << player1.name << " remporte la partie avec un score de " << player1Score << " à " << player2Score << " !" << std::endl;
     }
-    else if ((choice == 1 && computerChoice == 3) ||
-             (choice == 2 && computerChoice == 1) ||
-             (choice == 3 && computerChoice == 2))
+    else if (player1Score < player2Score)
     {
-        std::cout << player1.name << " remporte la partie !" << std::endl;
-        // player1.adjustPointsRelationship(1);
+        std::cout << player2.name << " remporte la partie avec un score de " << player2Score << " à " << player1Score << " !" << std::endl;
     }
     else
     {
-        std::cout << player2.name << " remporte la partie !" << std::endl;
-        // player2.adjustPointsRelationship(1);
+        std::cout << "La partie se termine par une égalité avec un score de " << player1Score << " à " << player2Score << " !" << std::endl;
     }
 }
 
@@ -97,6 +117,10 @@ int main()
 {
     // Titre
     std::cout << "Bienvenue dans ce mini jeu !" << std::endl;
+
+    // Ajouter une ligne vide
+    std::cout << std::endl
+              << std::endl;
 
     // Création d'objet de la class Characters avec des noms
     Characters hiloul("Hiloul");
@@ -128,6 +152,10 @@ int main()
             hiloul.talk("Mauvaise reponse: Coucou ! Comment tu vas ?");
         }
     }
+
+    // Ajouter une ligne vide
+    std::cout << std::endl
+              << std::endl;
 
     // 2ème question
     while (true)
@@ -161,10 +189,14 @@ int main()
         break;
     }
 
+    // Ajouter une ligne vide
+    std::cout << std::endl
+              << std::endl;
+
     // Troisième question
     while (true)
     {
-        hiloul.talk("Est-ce que tu me trouves jolie aujourd'hui ?");
+        hiloul.talk("Est-ce que tu veux jouer ?");
 
         // Choisir sa réponse
         std::vector<std::string> options3 = {"Oui je veux jouer !", "Non merci !", "je ne sais pas"};
@@ -179,16 +211,12 @@ int main()
             adel.talk("Non merci !");
             hiloul.talk("Oh ok tant pis...");
             adel.adjustPointsRelationship(-1);
-            // break;
+            break;
         }
         else
         {
             hiloul.talk("Pas compris ta réponse tu veux jouer ?");
         }
-        // Correction ici : ajout de la virgule
-        hiloul.talk("Points de relation avec Adel: " +
-                    std::to_string(adel.pointsRelationship));
-        break;
     }
 
     // Je met ca pour tester le programme.exe sinon disparait hors de while
@@ -197,3 +225,5 @@ int main()
 #endif
     return 0;
 }
+
+// La question est reposée à chaque fois que le jeu se termine
